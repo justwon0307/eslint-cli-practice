@@ -11,7 +11,7 @@ This is the most important package in this project, providing a collection of ES
 This package is for practice purposes and is intended for use only within this monorepo. You can install it using the command below:
 
 ```bash
-pnpm add -w -D @internal/eslint
+pnpm add --workspace -D @internal/eslint
 ```
 
 ## CLI 사용법 (CLI Usage)
@@ -62,6 +62,8 @@ my-eslint-cli init --force
 
 *   이 CLI는 현재 작업 디렉토리에 `eslint.config.ts` 파일을 생성한다. 파일 이름은 `eslint.config.ts`로 고정되어 있다.
     *   This CLI creates an `eslint.config.ts` file in your current working directory. The filename is fixed as `eslint.config.ts`.
+*   **TypeScript 설정 파일을 사용하려면 `jiti`가 필요하다.** ESLint가 TypeScript 설정 파일(`eslint.config.ts`)을 읽으려면, 프로젝트에 `jiti`를 개발 의존성으로 설치해야 한다.
+    *   **TypeScript configuration files require `jiti`.** In order for ESLint to read TypeScript configuration files (`eslint.config.ts`), you need to install `jiti` as a development dependency in your project.
 *   이 CLI는 피어 의존성(peer dependencies)을 *자동으로 설치하지 않는다*. `init` 명령어를 실행한 후, `@internal/eslint`의 피어 의존성인 필수 ESLint 플러그인과 파서를 수동으로 설치해야 한다. 필요한 패키지 목록은 `package.json`의 `peerDependencies` 섹션을 참조하거나 CLI 실행 후 출력되는 메시지를 확인.
     *   This CLI *does not automatically install* peer dependencies. After running the `init` command, you will need to manually install the required ESLint plugins and parsers that are peer dependencies of `@internal/eslint`. Refer to the `peerDependencies` section of `package.json` or check the message output after running the CLI for the list of necessary packages.
 
@@ -128,3 +130,30 @@ export default defineConfig([
 `jsonConfig`와 `markdownConfig`는 `files` 속성을 사용하여 특정 파일에만 적용되므로, `allConfig`에 포함되거나 개별적으로 추가될 때 다른 설정과 충돌하지 않는다.
 
 `jsonConfig` and `markdownConfig` apply only to specific files using their `files` property, so they won't conflict with other configurations when included in `allConfig` or added individually.
+
+## 오류 수정 일지
+
+`sample-react` 패키지에서 `pnpm exec my-eslint-cli init --react`를 실행했을 때, 다음 오류가 발생했습니다.
+
+```
+node:internal/modules/esm/resolve:275
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/actions' imported from /Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/index.js
+    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    at moduleResolve (node:internal/modules/esm/resolve:860:10)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:685:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:634:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:617:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:273:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/actions'
+}
+```
+
+**오류 발생 원인:** CLI 실행 시, Node.js 환경에서 ESM(ECMAScript Modules) 형식의 `import`를 제대로 해석하지 못하여 발생합니다.
+
+**해결 방법:** 빌드 시점에 `tsc-esm-fix`를 실행하여 이 문제를 자동으로 해결합니다.

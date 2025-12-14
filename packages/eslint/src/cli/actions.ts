@@ -35,13 +35,8 @@ export function initAction(options: InitOptions): void {
   try {
     fs.writeFileSync(targetFile, content);
     console.log("Successfully created eslint.config.ts");
-    
-    const dependencies = [
-      "eslint",
-      "globals",
-      "typescript-eslint",
-      "@eslint/js",
-    ];
+
+    const dependencies = ["eslint", "jiti"];
 
     if (options.react || options.all) {
       dependencies.push("eslint-plugin-react", "@eslint/css");
@@ -51,9 +46,11 @@ export function initAction(options: InitOptions): void {
       dependencies.push("@eslint/json", "@eslint/markdown");
     }
 
-    console.log("You will need to install the dependencies yourself!");
-    console.log("Run:");
+    console.log("\nYou will need to install the following peer dependencies:");
     console.log(`npm install -D ${dependencies.join(" ")}`);
+    console.log(
+      "\nNote: 'jiti' is required for ESLint to read TypeScript configuration files."
+    );
   } catch (error) {
     console.error("Failed to create configuration file:", error);
     process.exit(1);
