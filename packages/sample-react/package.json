@@ -1,0 +1,20 @@
+{
+  "name": "sample-react",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@eslint/css": "^0.14.1",
+    "@internal/eslint": "workspace:*",
+    "@types/react": "^19.2.7",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "jiti": "^2.6.1"
+  }
+}
