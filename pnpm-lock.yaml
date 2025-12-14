@@ -54,6 +54,21 @@ importers:
         specifier: ^4.0.15
         version: 4.0.15(@types/node@25.0.2)(jiti@2.6.1)
 
+  packages/sample-json:
+    devDependencies:
+      '@eslint/json':
+        specifier: ^0.14.0
+        version: 0.14.0
+      '@internal/eslint':
+        specifier: workspace:*
+        version: link:../eslint
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      jiti:
+        specifier: ^2.6.1
+        version: 2.6.1
+
   packages/sample-react:
     dependencies:
       react:

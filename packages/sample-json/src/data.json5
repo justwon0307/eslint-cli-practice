@@ -1,0 +1,7 @@
+{
+  name: "sample-data", // Unquoted key
+  isValid: true,
+  isValid: false, // Duplicate key
+  "": "empty key",
+  version: 1, // Trailing comma (valid in JSON5)
+}

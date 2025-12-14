@@ -1,0 +1,8 @@
+{
+  "name": "sample-data",
+  "isValid": true,
+  // This is a comment
+  "isValid": false, // Duplicate key
+  "": "empty key",
+  "version": 1
+}

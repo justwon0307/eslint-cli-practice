@@ -1,0 +1,14 @@
+{
+  "name": "sample-json",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@internal/eslint": "workspace:*",
+    "@eslint/json": "^0.14.0",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1"
+  }
+}
