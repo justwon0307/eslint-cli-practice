@@ -131,29 +131,3 @@ export default defineConfig([
 
 `jsonConfig` and `markdownConfig` apply only to specific files using their `files` property, so they won't conflict with other configurations when included in `allConfig` or added individually.
 
-## 오류 수정 일지
-
-`sample-react` 패키지에서 `pnpm exec my-eslint-cli init --react`를 실행했을 때, 다음 오류가 발생했습니다.
-
-```
-node:internal/modules/esm/resolve:275
-    throw new ERR_MODULE_NOT_FOUND(
-          ^
-
-Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/actions' imported from /Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/index.js
-    at finalizeResolution (node:internal/modules/esm/resolve:275:11)
-    at moduleResolve (node:internal/modules/esm/resolve:860:10)
-    at defaultResolve (node:internal/modules/esm/resolve:984:11)
-    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:685:12)
-    at #cachedDefaultResolve (node:internal/modules/esm/loader:634:25)
-    at ModuleLoader.resolve (node:internal/modules/esm/loader:617:38)
-    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:273:38)
-    at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
-  code: 'ERR_MODULE_NOT_FOUND',
-  url: 'file:///Users/vietman2/workspace/eslint-cli-practice/packages/eslint/dist/cli/actions'
-}
-```
-
-**오류 발생 원인:** CLI 실행 시, Node.js 환경에서 ESM(ECMAScript Modules) 형식의 `import`를 제대로 해석하지 못하여 발생합니다.
-
-**해결 방법:** 빌드 시점에 `tsc-esm-fix`를 실행하여 이 문제를 자동으로 해결합니다.
